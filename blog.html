@@ -1,0 +1,215 @@
+<link href=‘http://fonts.googleapis.com/css?family=Pacifico’ rel=‘stylesheet’ type=‘text/css’>
+<link href=‘http://fonts.googleapis.com/css?family=Cookie’ rel=‘stylesheet’ type=‘text/css’>
+<link href=‘http://fonts.googleapis.com/css?family=Leckerli+One’ rel=‘stylesheet’ type=‘text/css’>
+<link href=‘http://fonts.googleapis.com/css?family=Oleo+Script’ rel=‘stylesheet’ type=‘text/css’>
+<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<link rel="stylesheet" type="text/css" href="http://apps.bdimg.com/libs/bootstrap/3.3.4/css/bootstrap.min.css">
+<script type="text/javascript" src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="http://apps.bdimg.com/libs/jquery.cookie/1.4.1/jquery.cookie.min.js"></script>
+<p><span style="font-size:18px"><span style="font-family:kaiti">Next Contest：THUWC&NOIWC2019 @2019-1-20<br>Now Doing：模拟赛被虐<br>补点不熟的专题</span></span></p>
+<p><span style="font-size:16px"><span style="font-family:Comic Sans MS">
+Informatik verbindet dich und mich.<br>
+Zeit und Raum trennen dich und mich.<br>
+</span></span></p>
+<p class="gonggao">
+这短短的一生，<br>
+我们最终都会失去。<br>
+所以不妨大胆一些，<br>
+爱一个人，<br>
+攀一座山，<br>
+<span style="font-weight:bolder">追一个梦。</span><br>
+</p>
+<p align="right"><span style="font-family:楷体"><span style="font-size:16px">——电影《大鱼海棠》</span></span></p>
+<p><span style="font-size:30px"><span style="color:transparent">I love lyz. 12138</span></span></p>
+<div style="text-align: center; color: #ffffff;">
+        <canvas id="canvas" height="160" width="160">
+            您的浏览器不支持html5的canvas
+        </canvas>
+        <div style="height: 10px">
+        </div>
+        <div style="background-color: #0094ff;">
+            <div id="div1">
+            </div>
+            <div id="div2">
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+ function changeFooter(){
+            var nv = document.getElementById("footer");
+            nv.innerHTML="Copyright ©2018 DCDCBigBig<br />UI Design Copyright ©2018 MCHacker";
+        }
+function loadFont(){
+
+}
+        window.onload = function () {
+       changeFooter();
+            var canvas = document.getElementById("canvas");
+            var can = canvas.getContext("2d");
+            var radius = 80; //半径
+            var centre = [80, 80]; //中心点
+
+            setInterval(function () {
+                mydrawclock();
+
+            }, 1000);
+            //   mydrawclock();
+
+            function mydrawclock() {
+                //清空画布
+                can.clearRect(0, 0, 500, 500);
+                //钟的大小（圆）
+                can.fillStyle = "#ebf0eb";
+                can.beginPath();
+                can.arc(centre[0], centre[1], radius, 0, Math.PI * 2, true);
+                can.closePath();
+                can.fill();
+                //中心点
+                can.fillStyle = "#0094ff";
+                can.beginPath();
+                can.arc(centre[0], centre[1], 4, 0, Math.PI * 2, true);
+                can.closePath();
+                can.fill();
+                //画钟 宽度 度数 颜色 长度
+                function drawclock(w, d, c, l) {
+                    can.beginPath();
+                    can.strokeStyle = c;
+                    can.lineWidth = w;
+                    can.moveTo(centre[0], centre[1]);
+                    can.lineTo(centre[0] + (radius - l) * Math.cos(d), centre[1] + (radius - l) * Math.sin(d));
+                    can.stroke();
+                }
+
+                var date = new Date();
+                //因为画圆是从3点钟方向开始的 所以要减去
+                var hours = date.getHours();
+                var minutes = date.getMinutes();
+                var seconds = date.getSeconds();
+                var day = date.getDay();
+
+                drawclock(4, (hours - 3 + minutes / 60) * 30 * Math.PI / 180, "#0094ff", 33);
+                drawclock(3, (minutes - 15 + seconds / 60) * 6 * Math.PI / 180, "#0094ff", 22);
+                drawclock(2, (seconds - 15) * 6 * Math.PI / 180, "#0094ff", 1);
+
+                document.getElementById("div1").innerHTML = hours + ":";
+                if(minutes < 10)document.getElementById("div1").innerHTML += "0";
+                document.getElementById("div1").innerHTML += minutes + ":";
+                if(seconds<10)document.getElementById("div1").innerHTML +=  "0";
+                document.getElementById("div1").innerHTML += seconds;
+
+                switch (day) {
+                    case 0:
+                        day = "星期天";
+                        break;
+                    case 1:
+                        day = "星期一";
+                        break;
+                    case 2:
+                        day = "星期二";
+                        break;
+                    case 3:
+                        day = "星期三";
+                        break;
+                    case 4:
+                        day = "星期四";
+                        break;
+                    case 5:
+                        day = "星期五";
+                        break;
+                    case 6:
+                        day = "星期六";
+                        break;
+                    default:
+                        break;
+                }
+
+                document.getElementById("div2").innerHTML = day; // "</br>" + day;
+                // centre[0], centre[1]
+                //画分钟刻度
+                for (var i = 0; i < 60; i++) {
+                    var angle = i * 6 * Math.PI / 180;
+                    can.strokeStyle = "red";
+                    can.beginPath();
+                    can.lineWidth = 1;
+                    can.moveTo(centre[0] + radius * Math.cos(angle), centre[1] + radius * Math.sin(angle));
+                    can.lineTo(centre[0] + (radius - 5) * Math.cos(angle), centre[1] + (radius - 5) * Math.sin(angle));
+                    can.stroke();
+                }
+                //画时钟刻度
+                for (var i = 0; i < 12; i++) {
+                    var angle = i * 30 * Math.PI / 180;
+                    can.strokeStyle = "#0094ff";
+                    can.lineWidth = 2;
+                    can.beginPath();
+                    can.moveTo(centre[0] + radius * Math.cos(angle), centre[1] + radius * Math.sin(angle));
+                    can.lineTo(centre[0] + (radius - 8) * Math.cos(angle), centre[1] + (radius - 8) * Math.sin(angle));
+                    can.stroke();
+                }
+            }
+        }
+    </script>
+<p><span style="font-size:20px"><span style="font-family:kaiti">发财：</span><a href="http://www.noi.cn" style="color:#EAC100">€€£</a></span></p>
+<p><span style="font-size:20px"><span style="font-family:kaiti">OJs：<a href="https://www.lydsy.com/JudgeOnline" style="color:#6495ED">BZOJ</a>,<a href="https://darkbzoj.cf" style="color:#6495ED">Dark♂BZOJ</a>,<a href="https://www.luogu.org" style="color:#6495ED">洛谷</a>,<a href="https://uoj.ac" style="color:#6495ED">UOJ</a>,<a href="https://loj.ac" style="color:#6495ED">LOJ</a>,<a href="https://codevs.cn" style="color:#6495ED">Codevs</a>,<a href="http://192.168.102.138" style="color:#6495ED">小视野（里）</a>,<a href="http://xsy.gdgzez.com.cn" style="color:#6495ED">小视野（表）</a>,<a href="http://codeforces.com" style="color:#6495ED">CodeForces</a>,<a href="https://atcoder.jp" style="color:#6495ED">Atcoder</a></span></span></p>
+<p><span style="font-size:20px"><span style="font-family:kaiti">好东西：<a href="https://www.oi-wiki.org" style="color:#6495ED">OI-Wiki</a>,<a href="https://skywt.cn/oierdb" style="color:#6495ED">OIer数据库</a></span></span></p>
+<a href="https://www.cnblogs.com/dcdcbigbig" title="OrzOrz" style="font-size: 36px"><span style="color: black"><span style="font-family:仿宋">↓学长们</span></span></a><br>
+<a href="http://zjt-blog.cc" title="Our God ZJT!" style="font-size: 20px"><span style="color:#6495ED">zjt</span></a><br>
+<a href="https://www.cnblogs.com/ywwyww" title="Our Red Sun YWW!" style="font-size: 20px"><span style="color:#6495ED">yww</span></a><br>
+<a href="https://www.cnblogs.com/Sdchr" title="Worshipping YPL" style="font-size: 20px"><span style="color:#6495ED">ypl</span></a><br>
+<a href="https://www.illyasviel.top" title="伊莉雅天下第一可爱！" style="font-size: 20px"><span style="color:#6495ED">yxq</span></a><br>
+<a href="https://www.cnblogs.com/skylynf" title="Worshipping YLM" style="font-size: 20px"><span style="color:#6495ED">ylm</span></a><br>
+<a href="https://www.cnblogs.com/xiefengze1" title="Worshipping XFZ" style="font-size: 20px"><span style="color:#6495ED">xfz</span></a><br>
+<a href="https://www.cnblogs.com/yoyoball" title="Worshipping HY" style="font-size: 20px"><span style="color:#6495ED">hy</span></a><br>
+<a href="https://www.cnblogs.com/jefflyy" title="ロリリーがよかった" style="font-size: 20px"><span style="color:#6495ED">lyy</span></a><br>
+<a href="https://rogerdtz.github.io" title="Worshipping DTZ" style="font-size: 20px"><span style="color:#6495ED">dtz</span></a><br>
+<a href="https://www.cnblogs.com/dcdcbigbig" title="OrzOrz" style="font-size: 36px"><span style="color: black"><span style="font-family:仿宋">↓大佬们</span></span></a><br>
+<a href="https://www.cnblogs.com/JackyhhJuRuo" title="srO YRX Orz" style="font-size: 20px"><span style="color:#6495ED">yrx</span></a><br>
+<a href="https://www.cnblogs.com/gzez181027" title="srO LZX Orz" style="font-size: 20px"><span style="color:#6495ED">lzx</span></a><br>
+<a href="https://www.cnblogs.com/coco-night" title="srO DYH Orz" style="font-size: 20px"><span style="color:#6495ED">dyh</span></a><br>
+<a href="https://www.cnblogs.com/ezhjw" title="srO HJW Orz" style="font-size: 20px"><span style="color:#6495ED">hjw</span></a><br>
+<a href="https://www.cnblogs.com/dedicatus545" title="AK爷LHX" style="font-size: 20px"><span style="color:#6495ED">lhx</span></a><br>
+<a href="https://blog.csdn.net/suncongbo" title="scbtql" style="font-size: 20px"><span style="color:#6495ED">scb</span></a><br>
+<a href="https://syniox.github.io" title="srO SY Orz" style="font-size: 20px"><span style="color:#6495ED">sy</span></a><br>
+<a href="https://www.cnblogs.com/lsq647vsejgfb" title="srO LSQ Orz" style="font-size: 20px"><span style="color:#6495ED">lsq</span></a><br>
+<a href="https://blog.csdn.net/ezoilearner" title="srO 初二神仙ZJR Orz" style="font-size: 20px"><span style="color:#6495ED">zjr</span></a><br>
+<a href="https://www.cnblogs.com/dcdcbigbig" title="OrzOrz" style="font-size: 36px"><span style="color: black"><span style="font-family:仿宋">↓外校童鞋们</span></span></a><br>
+<a href="https://www.cnblogs.com/BrokenString/" title="orz" style="font-size: 20px"><span style="color:#6495ED">Nanchtiy</span></a><br>
+<a href="https://www.cnblogs.com/dcdcbigbig" title="OrzOrz" style="font-size: 36px"><span style="color: black"><span style="font-family:仿宋">↓一位大佬</span></span></a><br>
+<a href="https://www.ohyhello.com" title="肥宅同好！" style="font-size: 20px"><span style="color:#9933FF">Ohyhello</span></a><br>
+<a href="https://info.flagcounter.com/beH8"><img src="https://s01.flagcounter.com/count2/beH8/bg_D2E9FF/txt_003D79/border_0072E3/columns_2/maxflags_12/viewers_0/labels_0/pageviews_0/flags_0/percent_0/" alt="Flag Counter" border="0"></a><br>
+<a href="https://blog.csdn.net/yufeiskyer/article/details/51788815" style="font-size: 12px"><span style="color:white">这是虫合啊</span></a>
+<p style="font-size:14px"><br />蒟蒻感谢各位大佬的访问和转载~~<br />转载声明：本博客背景图片转载于Pixiv，著作权为原作者hiten所有<p>
+<script type="text/javascript"> 
+/* 鼠标特效 */ 
+var a_idx = 0; 
+jQuery(document).ready(function($) { 
+    $("body").click(function(e) { 
+        var a = new Array("QAQ","TAT","= =",">_<","^_^",": )",":O)",": P"); 
+        var $i = $("<span/>").text(a[a_idx]); 
+        a_idx = (a_idx + 1) % a.length; 
+        var x = e.pageX, 
+        y = e.pageY; 
+        $i.css({ 
+            "z-index": 999999999999999999999999999999999999999999999999999999999999999999999, 
+            "top": y - 20, 
+            "left": x, 
+            "position": "absolute", 
+            "font-weight": "bold", 
+            "color": "rgb(72,85,137)" 
+        }); 
+        $("body").append($i); 
+        $i.animate({ 
+            "top": y - 180, 
+            "opacity": 0 
+        }, 
+        1500, 
+        function() { 
+            $i.remove(); 
+        }); 
+    }); 
+}); 
+</script>
+<script type="text/javascript">
+         $("#home").prepend('<button type="button" class="btn btn-danger" id="ani-button" onclick="aniMode()">⑨</button>');
+        document.getElementById('footer').innerHTML = "Copyright ©2018 DCDCBigBig<br />UI Design Copyright ©2018 Dat MCHacker."
+</script>
